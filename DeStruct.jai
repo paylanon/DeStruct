@@ -5,7 +5,7 @@
 // An in-terminal struct visualizer.
 
 // DEMO: Uncomment and compile me!
-// Comment out again before using.
+// Comment out again before use.
 
 // #run demo();
 
@@ -23,6 +23,8 @@ demo :: () {
 	    sint: s32;
 	    flt:  float;
 	}
+
+        // CONSTANT :: 42;
     }
 
     Inner_Struct :: struct {
@@ -32,7 +34,7 @@ demo :: () {
     }
 
     Place :: struct {
-        
+
 	id: u16;
         inner: Inner_Struct;
         
@@ -46,14 +48,6 @@ demo :: () {
     de_struct(Demo_Struct, bytes_per_line=2);
     de_struct(Inner_Struct);
     de_struct(Place, bytes_per_line=2);
-}
-
-MIN_WIDTH    :: 20;
-NAME_PADDING :: 4;
-
-Box :: struct {
-    m: Type_Info_Struct_Member;
-    p: s64;
 }
 
 /*
@@ -80,6 +74,8 @@ de_struct :: (struct_type: Type, bytes_per_line: s64 = 4) {
     boxes: [..] Box;
     
     for ti.members {
+        
+        if it.offset_into_constant_storage >=0 continue;
 
         // Check for padding
         padding := it.offset_in_bytes - offset_cursor;
@@ -235,7 +231,15 @@ de_struct :: (struct_type: Type, bytes_per_line: s64 = 4) {
     print("┘\n");
 }
 
-#scope_module
+#scope_file
+
+MIN_WIDTH    :: 20;
+NAME_PADDING :: 4;
+
+Box :: struct {
+    m: Type_Info_Struct_Member;
+    p: s64;
+}
 
 draw_separator :: () #expand {
 
