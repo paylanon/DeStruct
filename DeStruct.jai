@@ -5,7 +5,7 @@
 // An in-terminal struct visualizer.
 
 // DEMO: Uncomment and compile me!
-// Comment out again before use.
+// Comment out again before using.
 
 // #run demo();
 
